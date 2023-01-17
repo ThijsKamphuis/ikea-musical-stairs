@@ -11,13 +11,13 @@
 #define DREQ 3
 
 // Adjust Volume
-#define VOLUME 20
+#define VOLUME 0
 
 Adafruit_VS1053_FilePlayer musicPlayer = Adafruit_VS1053_FilePlayer(SHIELD_RESET, SHIELD_CS, SHIELD_DCS, DREQ, CARDCS);
 
 
 // Sensor Setup
-#define TRAPCM 10
+#define TRAPCM 120
 #define SONAR_NUM 10
 NewPing sonar[SONAR_NUM] = {
   NewPing(0, 0, TRAPCM),
@@ -67,8 +67,9 @@ void loop () {
     int dist = sonar[i].ping_cm();
     if (dist != 0) {
       if (active[i] == 0) {
-        musicPlayer.startPlayingFile(soundFiles[i]);
+        musicPlayer.playFullFile(soundFiles[i]);
         active[i] = 1;
+        
       }
     }// if dist
     else {
@@ -79,8 +80,7 @@ void loop () {
     Serial.print("=");
     Serial.print(dist);
     Serial.print("cm ");
-
-    delay(30);
+    delay(15);
   }// for
   Serial.println();
 }// loop
